@@ -17,8 +17,15 @@ export enum SUBSTATE {
   NONE = "NONE",
   IFMENTION = "IFMENTION",
   PARTIAL = "PARTIAL",
+  PARTIALIFMENTION = "PARTIALIFMENTION",
   FULLIFMENTION = "FULLIFMENTION",
   FULL = "FULL",
+}
+
+export enum MSG_BROADCAST_TYPE {
+  NONE,
+  PARTIAL,
+  FULL,
 }
 
 export interface Client {

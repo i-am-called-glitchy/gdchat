@@ -57,7 +57,9 @@ Of course, clients should render the messages in the order as recieved.
 
 - none - Do not send any events from this channel
 - ifmention - Only send messages if the user was mentioned in them.
-- partial - Only send metadata from this channel, omit content.
+- partial - Only send metadata of this message, omit content.
+- partialifmention - Only send metadata of this message if mentioned, otherwise
+  don't send.
 - fullifmention - Normally do partial except if mentioned, send full.
 - full - Send all data from this channel in events.
 
