@@ -1,6 +1,7 @@
 // deno-lint-ignore-file
 
 import { Profile, SUBSTATE } from "./models.ts";
+import {UUID} from "node:crypto";
 
 export enum CloseCode {
   BAD_AUTH = 4000,
@@ -278,7 +279,7 @@ export function serializePacket(packet: AnyPacket): string {
   return JSON.stringify(packet, null, 2);
 }
 
-export function normalizeUUID(uuid: string): string {
+export function normalizeUUID(uuid: string): UUID {
   const cleaned = uuid.replace(/[^a-fA-F0-9]/g, ""); // remove non-hex
   if (cleaned.length !== 32) throw new Error("Invalid UUID");
   return [
@@ -287,7 +288,7 @@ export function normalizeUUID(uuid: string): string {
     cleaned.slice(12, 16),
     cleaned.slice(16, 20),
     cleaned.slice(20),
-  ].join("-").toLowerCase();
+  ].join("-").toLowerCase() as UUID /* needed to shut ts up */;
 }
 
 export function profileToPartialUser(profile: Profile): PartialUser {
