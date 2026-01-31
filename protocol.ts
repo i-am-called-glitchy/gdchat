@@ -29,6 +29,7 @@ export enum Opcode {
   FETCH_CHANNELS = "FETCH_CHANNELS",
   DELETE_MESSAGE = "DELETE_MESSAGE",
   SEND = "SEND",
+  DELETE = "DELETE"
 }
 
 export enum ErrorCategory {
@@ -188,6 +189,10 @@ export interface SendPayload {
   msgnonce?: number;
 }
 
+export interface DeletePayload {
+  id: string;
+}
+
 /**
  * To extend the protocol:
  * 1. Add Opcode to Enum.
@@ -201,6 +206,7 @@ export interface ProtocolDefinitions {
   [Opcode.ERROR]: ErrorPayload;
   [Opcode.CHANNELS]: ChannelsPayload;
   [Opcode.MSG]: MsgPayload;
+  [Opcode.DELETE]: DeletePayload;
 
   // C -> S
   [Opcode.AUTH]: AuthPayload;
