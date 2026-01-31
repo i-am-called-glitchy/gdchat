@@ -30,7 +30,7 @@ for either admin bots or extensions.
 
 An extension object looks like this:
 
-```jsonc
+```json5
 { "name": "extname", "namespace": "extns", "major_ver": 1, "patch_ver": 2 }
 ```
 
@@ -71,7 +71,7 @@ Note: Subscription types are not case-sensitive
 
 A partial user looks like this:
 
-```jsonc
+```json5
 { "id": "UUID HERE", "namespace": "amcalledglitchy.dev", "ver": 1 }
 ```
 
@@ -84,7 +84,7 @@ extensions. Version should never decrement.
 
 ### Full user
 
-```jsonc
+```json5
 {
   "id": "UUID HERE",
   "dname": "Display Name",
@@ -117,7 +117,7 @@ Note: See [this](#invalid-category)
 
 ### Message object
 
-```jsonc
+```json5
 {
   "user": {/* partial user object */},
   "channel": "UUID HERE",
@@ -132,7 +132,7 @@ Note: See [this](#invalid-category)
 
 ### Channel object
 
-```jsonc
+```json5
 {
   "id": "UUID HERE",
   "name": "name-here",
@@ -159,7 +159,7 @@ Channel name Restrictions:
 
 ### Base packet:
 
-```jsonc
+```json5
 {
   "op": "placeholder", // Packet type/opcode, i.e ERROR, AUTH, etc.., must be treated as case sensitive and always uppercase
   "data": { // Actual payload of the packet
@@ -183,7 +183,7 @@ Channel name Restrictions:
 
 #### HELLO
 
-```jsonc
+```json5
 {
   "data": {
     "name": "Dumb server lol", // Display name of the server
@@ -199,7 +199,7 @@ Note: See [this](#about-extensions).
 
 #### AUTH
 
-```jsonc
+```json5
 {
   "data": {
     "token": "eyJh...omSE", // Authentication token the client got
@@ -220,7 +220,7 @@ On success:
 Send an [OK](#ok) packet with the following structure, and send a CHANNELS
 packet.
 
-```jsonc
+```json5
 {
   "response_type": "AUTH",
   "data": {
@@ -235,7 +235,7 @@ See [user profile model](#full-user).
 
 #### OK
 
-```jsonc
+```json5
 {
   "response_type": "OPCODE",
   "data": {/* enforced per packet, nullable */}
@@ -247,7 +247,7 @@ response_type expects in the data field.
 
 #### ERROR
 
-```jsonc
+```json5
 {
   "data": {
     "msg": "oopsies, something happened", // optional
@@ -306,7 +306,7 @@ return `INVALID/NOT_FOUND` for security reasons.
 
 #### CHANNELS
 
-```jsonc
+```json5
 {
   "data": {
     "channels": [/* Channel blobs */]
@@ -335,7 +335,7 @@ return `INVALID/NOT_FOUND` for security reasons.
 
 See [the subscription types](#subscription-types).
 
-```jsonc
+```json5
 {
   "data": {
     "cid": "uuid here", // Channel id
@@ -356,7 +356,7 @@ See [the subscription types](#subscription-types).
 
 By default, the behavior should be to have type on full.
 
-```jsonc
+```json5
 {
   "data": {
     "type": "none|ifmention|partial|fullifmention|full" // Subscription type
@@ -373,7 +373,7 @@ Server should reply with a plain OK otherwise.
 > try not to run into any memory issues while processing this client devs ;3
 > (you're welcome for partial)
 
-```jsonc
+```json5
 {
   "data": {
     "cid": "uuid here", // Channel id
@@ -391,7 +391,7 @@ channel can't be seen or does not exist return the `INVALID/NOT_FOUND` error.
 
 Server should reply with a structured OK.
 
-```jsonc
+```json5
 {
   "data": {
     "messages": [/* message blobs here */],
@@ -405,7 +405,7 @@ Note: see [this](#message-object)
 
 #### FETCH_USER
 
-```jsonc
+```json5
 {
   "data": {
     "id": "UUID HERE"
@@ -417,7 +417,7 @@ really simple packet lmao
 
 Server should reply with a structured OK.
 
-```jsonc
+```json5
 {
   "data": {
     "user": {/* profile blob */}
@@ -429,7 +429,7 @@ Note: read [this](#full-user)
 
 #### FETCH_USERS
 
-```jsonc
+```json5
 {
   "data": {
     "channel": "UUID HERE",
@@ -440,7 +440,7 @@ Note: read [this](#full-user)
 
 Server should reply with a structured OK.
 
-```jsonc
+```json5
 {
   "data": {
     "users": [/* partial users if not full else full users */]
@@ -452,7 +452,7 @@ Note: read [this](#partial-user) and [this](#full-user)
 
 #### FETCH_MESSAGE
 
-```jsonc
+```json5
 {
   "data": {
     "id": "UUID HERE"
@@ -464,7 +464,7 @@ also a simple packet
 
 Server should reply with a structured OK.
 
-```jsonc
+```json5
 {
   "data": {
     "message": {/* message blob */}
@@ -474,7 +474,7 @@ Server should reply with a structured OK.
 
 #### FETCH_CHANNEL
 
-```jsonc
+```json5
 {
   "data": {
     "id": "UUID HERE"
@@ -486,7 +486,7 @@ do I really have to say it?
 
 Server should reply with a structured OK.
 
-```jsonc
+```json5
 {
   "data": {
     "channel": {/* channel blob */}
@@ -500,7 +500,7 @@ even simpler lmao just send the base packet
 
 Server should reply with a structured OK.
 
-```jsonc
+```json5
 {
   "data": {
     "channels": [{/* channel blobs */}]
@@ -510,7 +510,7 @@ Server should reply with a structured OK.
 
 #### DELETE_MESSAGE
 
-```jsonc
+```json5
 {
   "data": {
     "id": "UUID HERE" // message id
@@ -526,7 +526,7 @@ give a base OK.
 
 #### SEND
 
-```jsonc
+```json5
 {
   "data": {
     "channel": "UUID HERE",
@@ -548,7 +548,7 @@ same msgnonce but differing contents, the server should return the error
 
 Otherwise, the server should respond with a structured OK.
 
-```jsonc
+```json5
 {
   "data": {
     "result_id": "UUID HERE", // UUID of the sent message.
@@ -576,7 +576,7 @@ Read [this](#about-mentions) and [this](#about-message-collisions).
 
 Read [this](#subscription-types).
 
-```jsonc
+```json5
 { "data": {/* message object */} }
 ```
 
