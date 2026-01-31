@@ -55,6 +55,8 @@ Of course, clients should render the messages in the order as recieved.
 
 ## Subscription types
 
+Note: Subscription types are not case-sensitive
+
 - none - Do not send any events from this channel
 - ifmention - Only send messages if the user was mentioned in them.
 - partial - Only send metadata of this message, omit content.
