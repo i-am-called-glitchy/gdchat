@@ -565,9 +565,10 @@ Read [this](#about-mentions) and [this](#about-message-collisions).
 
 ### 3.1 Events (Table)
 
-| Opcode | Direction | NR | Description                                                           |
-| ------ | --------- | -- | --------------------------------------------------------------------- |
-| MSG    | S         | x  | New message has arrived in a channel the client's user has access to. |
+| Opcode | Direction | NR | Description                                                               |
+| ------ | --------- | -- | ------------------------------------------------------------------------- |
+| MSG    | S         | x  | New message has arrived in a channel the client's user has access to.     |
+| DELETE | S         | x  | A message has been deleted in a channel the client's user has access to.` |
 
 ### 3.2 Events (Structure)
 
@@ -581,3 +582,11 @@ Read [this](#subscription-types).
 
 Note: See [this](#partial-user) and [this](#message-object) and
 [this](#about-message-collisions).
+
+#### DELETE
+
+```json5
+{ "data": {"id":  "UUID HERE"} }
+```
+
+Client should remove this message from being rendered.
