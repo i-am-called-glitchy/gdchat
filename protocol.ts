@@ -1,6 +1,6 @@
 // deno-lint-ignore-file
 
-import { Profile } from "./models.ts";
+import { Profile, SUBSTATE } from "./models.ts";
 
 export enum CloseCode {
   BAD_AUTH = 4000,
@@ -60,13 +60,6 @@ export const ErrorCodes = {
     NOT_IMPLEMENTED: "NOT_IMPLEMENTED",
   },
 } as const;
-
-export type SubscriptionType =
-  | "none"
-  | "ifmention"
-  | "partial"
-  | "fullifmention"
-  | "full";
 
 export interface Extension {
   name: string;
@@ -163,11 +156,11 @@ export interface AuthPayload {
 
 export interface SubPayload {
   cid: string;
-  type: SubscriptionType;
+  type: SUBSTATE;
 }
 
 export interface SubDefaultPayload {
-  type: SubscriptionType;
+  type: SUBSTATE;
 }
 
 export interface FetchHistoryPayload {
