@@ -182,10 +182,6 @@ export interface SendPayload {
   msgnonce?: number;
 }
 
-export interface DeletePayload {
-  id: string;
-}
-
 /**
  * To extend the protocol:
  * 1. Add Opcode to Enum.
@@ -199,7 +195,6 @@ export interface ProtocolDefinitions {
   [Opcode.ERROR]: ErrorPayload;
   [Opcode.CHANNELS]: ChannelsPayload;
   [Opcode.MSG]: MsgPayload;
-  [Opcode.DELETE]: DeletePayload;
 
   // C -> S
   [Opcode.AUTH]: AuthPayload;
@@ -215,6 +210,7 @@ export interface ProtocolDefinitions {
   [Opcode.FETCH_MESSAGE]: IdPayload;
   [Opcode.FETCH_CHANNEL]: IdPayload;
   [Opcode.DELETE_MESSAGE]: IdPayload;
+  [Opcode.DELETE]: IdPayload;
 }
 
 export interface BasePacket<T> {
