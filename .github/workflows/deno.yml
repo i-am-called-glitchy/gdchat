@@ -1,0 +1,43 @@
+name: Format and Push
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  fmt:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+
+      - name: Set up Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - name: Run deno fmt
+        run: deno fmt
+
+      - name: Commit changes if any
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Check if there are changes
+          if ! git diff --quiet; then
+            git add .
+            git commit -m "chore: auto-format with deno fmt [skip ci]"
+
+            git pull --rebase origin main
+            git push
+          else
+            echo "No changes to commit."
+          fi
