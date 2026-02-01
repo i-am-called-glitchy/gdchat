@@ -1,4 +1,3 @@
-import { randomUUID } from "node:crypto";
 import {CHATSTATE, Client, Profile} from "../models.ts";
 import {
   AuthPacket,
