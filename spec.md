@@ -64,6 +64,8 @@ Note: Subscription types are not case-sensitive
   don't send.
 - fullifmention - Normally do partial except if mentioned, send full.
 - full - Send all data from this channel in events.
+- default - This is a special case, the server should remove a channel-specific
+  subscription. Invalid for SUB_DEFAULT, server should raise BAD_OP.
 
 ## Models
 
