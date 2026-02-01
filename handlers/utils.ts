@@ -26,6 +26,7 @@ export function errorBadOp(
     message ?? undefined,
     packet.nonce ?? undefined,
   );
+  console.trace(packet)
   socket.send(serializePacket(response));
 }
 
