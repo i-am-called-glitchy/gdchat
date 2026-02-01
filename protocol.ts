@@ -1,7 +1,7 @@
 // deno-lint-ignore-file
 
 import { Profile, SUBSTATE } from "./models.ts";
-import {UUID} from "node:crypto";
+import { UUID } from "node:crypto";
 
 export enum CloseCode {
   BAD_AUTH = 4000,
@@ -30,7 +30,7 @@ export enum Opcode {
   FETCH_CHANNELS = "FETCH_CHANNELS",
   DELETE_MESSAGE = "DELETE_MESSAGE",
   SEND = "SEND",
-  DELETE = "DELETE"
+  DELETE = "DELETE",
 }
 
 export enum ErrorCategory {

@@ -1,6 +1,11 @@
 // handlers.ts
 import { ChannelMap, CHATSTATE, Client, ClientMap } from "../models.ts";
-import { Opcode, ErrorCategory, createErrorPacket, serializePacket } from "../protocol.ts";
+import {
+  createErrorPacket,
+  ErrorCategory,
+  Opcode,
+  serializePacket,
+} from "../protocol.ts";
 import { handleAuthPacket } from "./auth.ts";
 import { handleSendPacket } from "./send.ts";
 import { handleSubPacket } from "./sub.ts";
@@ -10,21 +15,23 @@ import { errorBadOp, errorBadState } from "./utils.ts";
 import { ClientPacketSchema } from "../schemas.ts";
 
 export function mainPacketHandler(
-    rawPacket: unknown,
-    clients: ClientMap,
-    socket: WebSocket,
-    client: Client,
-    channels: ChannelMap,
+  rawPacket: unknown,
+  clients: ClientMap,
+  socket: WebSocket,
+  client: Client,
+  channels: ChannelMap,
 ) {
   const validationResult = ClientPacketSchema.safeParse(rawPacket);
 
   if (!validationResult.success) {
-    const errorMsg = validationResult.error.issues.map(e => `${e.path.join('.')}: ${e.message}`).join(', ');
+    const errorMsg = validationResult.error.issues.map((e) =>
+      `${e.path.join(".")}: ${e.message}`
+    ).join(", ");
 
     const errPacket = createErrorPacket(
-        ErrorCategory.INVALID,
-        "BAD_OP",
-        `Invalid packet structure: ${errorMsg}`
+      ErrorCategory.INVALID,
+      "BAD_OP",
+      `Invalid packet structure: ${errorMsg}`,
     );
     socket.send(serializePacket(errPacket));
     return;
