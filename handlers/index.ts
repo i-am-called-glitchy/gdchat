@@ -69,7 +69,7 @@ export function mainPacketHandler(
     case Opcode.FETCH_CHANNELS:
     case Opcode.DELETE_MESSAGE:
     case Opcode.DELETE: {
-      errorBadOp(packet, socket, "Not implemented"); // Not implemented
+      errorBadOp(packet, socket, "Not implemented");
       return;
     }
     default: {
