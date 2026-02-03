@@ -47,7 +47,7 @@ export const FetchUsersPayloadSchema = z.object({
 });
 
 export const IdPayloadSchema = z.object({
-  id: z.string(),
+  id: z.uuidv4(),
 });
 
 export const EmptyPayloadSchema = z.record(z.string(), z.never());
