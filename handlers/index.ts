@@ -8,7 +8,7 @@ import {
 } from "../protocol.ts";
 import { handleAuthPacket } from "./auth.ts";
 import { handleSendPacket } from "./send.ts";
-import {handleSubDefaultPacket, handleSubPacket} from "./sub.ts";
+import { handleSubDefaultPacket, handleSubPacket } from "./sub.ts";
 import { errorBadOp, errorBadState } from "./utils.ts";
 
 // Import the schema
@@ -58,7 +58,7 @@ export function mainPacketHandler(
       return;
     }
     case Opcode.SUB_DEFAULT: {
-      handleSubDefaultPacket(packet, socket, client)
+      handleSubDefaultPacket(packet, socket, client);
       return;
     }
     case Opcode.FETCH_HISTORY:
