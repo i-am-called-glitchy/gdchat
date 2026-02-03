@@ -42,13 +42,18 @@ function handleAuthStep2(
     "handleAuthStep2 triggered.. ight i will just pretend everything checks out :P",
   );
   client.state = CHATSTATE.AUTHENTICATED;
+  sendPostAuthPackets(socket, client);
+}
 
+function sendPostAuthPackets(socket: WebSocket, client: Client) {
   const okPacket: OkPacket = {
     op: Opcode.OK,
     data: {
       response_type: Opcode.AUTH,
       data: {
-        profile: profileToFullUser(client.profile),
+        profile: profileToFullUser(
+          client.profile!,
+        ), /* trust me ts, this shit aint nully */
       },
     },
   };
