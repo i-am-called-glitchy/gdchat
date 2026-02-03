@@ -12,7 +12,7 @@ import { ensurePacketHasNonce, errorBadState } from "./utils.ts";
 const testTokens: Map<string, Profile> = new Map();
 // ! Take this out in prod
 testTokens.set("glitchy", {
-  id: "00000000-0000-0000-0000-00000000000",
+  id: "00000000-0000-0000-0000-000000000000",
   dname: "Glitchy :3c",
   uname: "glitchy",
   namespace: "amcalledglitchy.dev",
@@ -20,7 +20,7 @@ testTokens.set("glitchy", {
 });
 
 testTokens.set("testGlitch", {
-  id: "00000000-0000-0000-0000-00000000001",
+  id: "00000000-0000-0000-0000-000000000001",
   dname: "testGlitch :P",
   uname: "owo",
   namespace: "amcalledglitchy.dev",
