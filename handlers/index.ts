@@ -3,6 +3,8 @@ import { ChannelMap, CHATSTATE, Client, ClientMap } from "../models.ts";
 import {
   createErrorPacket,
   ErrorCategory,
+  FetchChannelPacket,
+  FetchChannelsPacket,
   Opcode,
   serializePacket,
 } from "../protocol.ts";
@@ -13,6 +15,7 @@ import { errorBadOp, errorBadState } from "./utils.ts";
 
 // Import the schema
 import { ClientPacketSchema } from "../schemas.ts";
+import { handleChannelFetch, handleChannelsFetch } from "./channel_fetch.ts";
 
 export function mainPacketHandler(
   rawPacket: unknown,
@@ -65,8 +68,24 @@ export function mainPacketHandler(
     case Opcode.FETCH_USERS:
     case Opcode.FETCH_USER:
     case Opcode.FETCH_MESSAGE:
-    case Opcode.FETCH_CHANNEL:
-    case Opcode.FETCH_CHANNELS:
+    case Opcode.FETCH_CHANNEL: {
+      handleChannelFetch(
+        packet as FetchChannelPacket,
+        socket,
+        client,
+        channels,
+      );
+      return;
+    }
+    case Opcode.FETCH_CHANNELS: {
+      handleChannelsFetch(
+        packet as FetchChannelsPacket,
+        socket,
+        client,
+        channels,
+      );
+      return;
+    }
     case Opcode.DELETE_MESSAGE:
     case Opcode.DELETE: {
       errorBadOp(packet, socket, "Not implemented");
