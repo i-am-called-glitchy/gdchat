@@ -19,8 +19,6 @@ import { mainPacketHandler } from "./handlers/index.ts";
 const MESSAGE_CONTENT_LIMIT = 2000;
 const HARD_MESSAGE_LENGTH_LIMIT = 6144;
 
-const textEncoder = new TextEncoder();
-
 function mainPage(_req: Request): Response {
   return new Response("Hello OwO\nThis is a websocket server :3c");
 }
@@ -68,7 +66,7 @@ function onConnect(
   socket.addEventListener("close", () => clients.delete(socket));
 
   socket.addEventListener("message", (ev: MessageEvent) => {
-    const packetLength = textEncoder.encode(ev.data).length;
+    const packetLength = ev.data.length;
     if (packetLength > HARD_MESSAGE_LENGTH_LIMIT) {
       socket.close(1009, "why are you sending me pictures of your mom");
       return;
