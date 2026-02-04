@@ -1,6 +1,6 @@
 // deno-lint-ignore-file
 
-import {Channel, Profile, SUBSTATE} from "./models.ts";
+import { Channel, Profile, SUBSTATE } from "./models.ts";
 import { UUID } from "node:crypto";
 
 export enum CloseCode {
