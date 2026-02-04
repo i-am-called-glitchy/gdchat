@@ -163,11 +163,11 @@ Channel name Restrictions:
 
 ```json5
 {
-  "op": "placeholder", // Packet type/opcode, i.e ERROR, AUTH, etc.., must be treated as case sensitive and always uppercase
+  "op": "placeholder", // Packet type/opcode, i.e. ERROR, AUTH, etc…, must be treated as case-sensitive and always uppercase
   "data": { // Actual payload of the packet
     /* placeholder */
   },
-  "nonce": null // if a S packet includes this, it's a reply to a packet the client sent with a nonce, if a C packet includes this, it's the nonce. This exists here to standardize the nonce key. Clients and servers should NEVER add nonce keys, including null, where not needed. This should never be reused in the socket's lifetime, or at least as rarely as possible. If the client wants to shoot themselves in the foot go ahead, a uuidv4 should be enough tbh.
+  "nonce": null // if an S packet includes this, it's a reply to a packet the client sent with a nonce, if a C packet includes this, it's the nonce. This exists here to standardize the nonce key. Clients and servers should NEVER add nonce keys, including null, where not needed. This should never be reused in the socket's lifetime, or at least as rarely as possible. If the client wants to shoot themselves in the foot go ahead, an uuidv4 should be enough tbh.
 }
 ```
 
@@ -192,7 +192,7 @@ Channel name Restrictions:
     "version": 1, // basically cosmetic for now
     "message_content_limit": 4000, // 2k or 4k work well
     "hard_message_length_limit": 6144, // How many bytes can the client send in one ws message before they get hard kicked. Set -1 if you're masochistic.
-    "ext": [] // Array of extension objects, these are identifiers for extensions, like profile pictures, etc..
+    "ext": [] // Array of extension objects, these are identifiers for extensions, like profile pictures, etc…
   }
 }
 ```
@@ -311,7 +311,7 @@ return `INVALID/NOT_FOUND` for security reasons.
 #### CHANNELS
 
 Should be sent immediately after authentication succeeds. Can be sent at later
-points, for example if the channel list updates mid session.
+points, for example if the channel list updates mid-session.
 
 ```json5
 {
@@ -558,7 +558,7 @@ Otherwise, the server should respond with a structured OK.
 ```json5
 {
   "data": {
-    "result_id": "UUID HERE", // UUID of the sent message.
+    "result_id": "UUID HERE", // UUID of sent message.
     "duplicate": false // True if the nonce matches
   }
 }
