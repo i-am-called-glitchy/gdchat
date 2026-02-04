@@ -1,6 +1,6 @@
 // deno-lint-ignore-file
 
-import { Profile, SUBSTATE } from "./models.ts";
+import {Channel, Profile, SUBSTATE} from "./models.ts";
 import { UUID } from "node:crypto";
 
 export enum CloseCode {
@@ -78,12 +78,6 @@ export interface PartialUser {
 export interface FullUser extends PartialUser {
   dname: string;
   uname: string;
-}
-
-export interface Channel {
-  id: string;
-  name: string;
-  description: string;
 }
 
 export interface Message {
