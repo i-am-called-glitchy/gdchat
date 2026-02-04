@@ -49,7 +49,7 @@ export function mainPacketHandler(
 
   switch (packet.op) {
     case Opcode.AUTH: {
-      handleAuthPacket(packet, socket, client);
+      handleAuthPacket(packet, socket, client, channels);
       return;
     }
     case Opcode.SEND: {

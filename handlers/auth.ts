@@ -1,6 +1,7 @@
-import { CHATSTATE, Client, Profile } from "../models.ts";
+import { ChannelMap, CHATSTATE, Client, Profile } from "../models.ts";
 import {
   AuthPacket,
+  ChannelsPacket,
   CloseCode,
   OkPacket,
   Opcode,
@@ -31,6 +32,7 @@ function handleAuthStep2(
   packet: AuthPacket,
   socket: WebSocket,
   client: Client,
+  channels: ChannelMap,
 ) {
   // no good dummy auth thingy
   client.profile = testTokens.get(packet.data.token);
@@ -42,12 +44,18 @@ function handleAuthStep2(
     "handleAuthStep2 triggered.. ight i will just pretend everything checks out :P",
   );
   client.state = CHATSTATE.AUTHENTICATED;
-  sendPostAuthPackets(socket, client);
+  sendPostAuthPackets(socket, client, packet, channels);
 }
 
-function sendPostAuthPackets(socket: WebSocket, client: Client) {
+function sendPostAuthPackets(
+  socket: WebSocket,
+  client: Client,
+  packet: AuthPacket,
+  channels: ChannelMap,
+) {
   const okPacket: OkPacket = {
     op: Opcode.OK,
+    nonce: packet.nonce,
     data: {
       response_type: Opcode.AUTH,
       data: {
@@ -58,13 +66,22 @@ function sendPostAuthPackets(socket: WebSocket, client: Client) {
     },
   };
 
+  const channelsPacket: ChannelsPacket = {
+    op: Opcode.CHANNELS,
+    data: {
+      channels: channels.values().toArray(),
+    },
+  };
+
   socket.send(serializePacket(okPacket));
+  socket.send(serializePacket(channelsPacket));
 }
 
 export function handleAuthPacket(
   packet: AuthPacket,
   socket: WebSocket,
   client: Client,
+  channels: ChannelMap,
 ) {
   if (!ensurePacketHasNonce(packet, socket, false)) {
     socket.close(CloseCode.BAD_AUTH, "Bad token");
@@ -76,7 +93,7 @@ export function handleAuthPacket(
       return;
     }
     case CHATSTATE.JUST_CONNECTED: {
-      handleAuthStep2(packet, socket, client);
+      handleAuthStep2(packet, socket, client, channels);
       return;
     }
   }

@@ -222,6 +222,8 @@ On success:
 Send an [OK](#ok) packet with the following structure, and send a CHANNELS
 packet.
 
+Important: Send CHANNELS after OK.
+
 ```json5
 {
   "response_type": "AUTH",
@@ -307,6 +309,9 @@ return `INVALID/NOT_FOUND` for security reasons.
 | BAD_GATEWAY | Server you are connected to is acting as a reverse proxy. The underlying server behind the proxy has encountered an error and cannot handle your request. |
 
 #### CHANNELS
+
+Should be sent immediately after authentication succeeds. Can be sent at later
+points, for example if the channel list updates mid session.
 
 ```json5
 {
