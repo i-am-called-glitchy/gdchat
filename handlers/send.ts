@@ -99,24 +99,26 @@ export function handleSendPacket(
     broadcastMessagePartial,
   );
 
-  clients.forEach((iter_client) => {
-    switch (
-      whatShouldIBroadcast(
-        iter_client,
-        targetChannel as UUID,
-        broadcastMessage.data.mentions,
-      )
-    ) {
-      case MSG_BROADCAST_TYPE.FULL:
-        iter_client.socket.send(broadcastMessageSerialized);
-        break;
-      case MSG_BROADCAST_TYPE.PARTIAL:
-        iter_client.socket.send(broadcastMessagePartialSerialized);
-        break;
-      case MSG_BROADCAST_TYPE.NONE:
-        break;
-    }
-  });
+  Promise.all(
+    [...clients.values()]
+      .filter((client) => client.socket.readyState === WebSocket.OPEN)
+      .map((client) => {
+        switch (
+          whatShouldIBroadcast(
+            client,
+            targetChannel as UUID,
+            broadcastMessage.data.mentions,
+          )
+        ) {
+          case MSG_BROADCAST_TYPE.FULL:
+            client.socket.send(broadcastMessageSerialized);
+            break;
+          case MSG_BROADCAST_TYPE.PARTIAL:
+            client.socket.send(broadcastMessagePartialSerialized);
+            break;
+        }
+      }),
+  );
 
   const okPacket: OkPacket = {
     op: Opcode.OK,
