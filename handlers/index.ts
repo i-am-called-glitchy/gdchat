@@ -67,10 +67,6 @@ export function mainPacketHandler(
       handleSubDefaultPacket(packet, socket, client);
       return;
     }
-    case Opcode.FETCH_HISTORY:
-    case Opcode.FETCH_USERS:
-    case Opcode.FETCH_USER:
-    case Opcode.FETCH_MESSAGE:
     case Opcode.FETCH_CHANNEL: {
       handleChannelFetch(
         packet as FetchChannelPacket,
@@ -89,6 +85,10 @@ export function mainPacketHandler(
       );
       return;
     }
+    case Opcode.FETCH_HISTORY:
+    case Opcode.FETCH_USERS:
+    case Opcode.FETCH_USER:
+    case Opcode.FETCH_MESSAGE:
     case Opcode.DELETE_MESSAGE:
     case Opcode.DELETE: {
       errorBadOp(packet, socket, "Not implemented");
