@@ -1,9 +1,11 @@
 import {
   AnyPacket,
+  CloseCode,
   createErrorPacket,
   ErrorCategory,
   serializePacket,
 } from "../protocol.ts";
+import { CHATSTATE, Client } from "../models.ts";
 
 export function errorBadState(packet: AnyPacket, socket: WebSocket) {
   const response = createErrorPacket(
@@ -52,4 +54,21 @@ export function errorNotFound(packet: AnyPacket, socket: WebSocket) {
     packet.nonce ?? undefined,
   );
   socket.send(serializePacket(response));
+}
+
+export function kickIfBadAuth(
+  client: Client,
+  socket: WebSocket,
+  errormsg?: string,
+): boolean {
+  if (client.state === CHATSTATE.JUST_CONNECTED) {
+    socket.close(
+      CloseCode.BAD_AUTH,
+      errormsg
+        ? errormsg.slice(0, 122)
+        : "Bad packet sent in auth phase. Socket expects gdchat.",
+    );
+    return true;
+  }
+  return false;
 }
