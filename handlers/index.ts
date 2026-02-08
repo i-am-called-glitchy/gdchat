@@ -11,7 +11,7 @@ import {
 import { handleAuthPacket } from "./auth.ts";
 import { handleSendPacket } from "./send.ts";
 import { handleSubDefaultPacket, handleSubPacket } from "./sub.ts";
-import { errorBadOp, errorBadState } from "./utils.ts";
+import { errorBadOp, errorBadState, kickIfBadAuth } from "./utils.ts";
 
 // Import the schema
 import { ClientPacketSchema } from "../schemas.ts";
@@ -36,6 +36,9 @@ export function mainPacketHandler(
       "BAD_OP",
       errorMsg,
     );
+    if (kickIfBadAuth(client, socket, errorMsg)) {
+      return;
+    }
     socket.send(serializePacket(errPacket));
     return;
   }
