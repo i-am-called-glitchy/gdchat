@@ -15,6 +15,7 @@ import {
   serializePacket,
 } from "./protocol.ts";
 import { mainPacketHandler } from "./handlers/index.ts";
+import { conditionalLog } from "./utils.ts";
 
 const MESSAGE_CONTENT_LIMIT = 2000;
 const HARD_MESSAGE_LENGTH_LIMIT = 6144;
