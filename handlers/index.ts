@@ -34,7 +34,7 @@ export function mainPacketHandler(
     const errPacket = createErrorPacket(
       ErrorCategory.INVALID,
       "BAD_OP",
-      `Invalid packet structure: ${errorMsg}`,
+      errorMsg,
     );
     socket.send(serializePacket(errPacket));
     return;
