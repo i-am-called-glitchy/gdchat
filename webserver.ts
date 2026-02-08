@@ -110,6 +110,19 @@ export function serve(clients: ClientMap, channels: ChannelMap) {
       () => onConnect(socket, info, clients, channels),
     );
 
+    setInterval(() => {
+      for (const client of clients.values()) {
+        if (client.socket.readyState !== WebSocket.OPEN) continue;
+        if (client.socket.bufferedAmount > 1_000_000) {
+          conditionalLog(
+            "BACKPRESSURE",
+            `Client ${client.clientid} too slow: ${client.socket.bufferedAmount}`,
+          );
+          client.socket.close(1009, "Backpressure exceeded");
+        }
+      }
+    }, 250);
+
     return response;
   });
 }
