@@ -86,6 +86,11 @@ function onConnect(
     const packetLength = ev.data.length;
     if (packetLength > HARD_MESSAGE_LENGTH_LIMIT) {
       socket.close(1009, "why are you sending me pictures of your mom");
+      conditionalLog(
+        "HARD_MESSAGE_LENGTH",
+        `${client.clientid} exceeded HARD_MESSAGE_LENGTH_LIMIT`,
+        client,
+      );
       return;
     }
     try {
