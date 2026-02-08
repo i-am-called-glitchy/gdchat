@@ -101,7 +101,8 @@ function onConnect(
     }
   });
 
-  console.log(
+  conditionalLog(
+    "CONNECT_LOG",
     `Oh hey a client connected OwO ${info.remoteAddr.hostname}:${info.remoteAddr.port} (${clientid})`,
   );
 
