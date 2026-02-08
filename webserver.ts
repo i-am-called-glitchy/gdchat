@@ -31,20 +31,36 @@ function onMessage(
   clients: ClientMap,
   channels: ChannelMap,
 ): void {
-  if (ev.data.toString().length == 0) {
+  if (ev.data.toString().length === 0) return;
+
+  conditionalLog(
+    "LOG_ALL_PACKETS",
+    `${client.clientid} (${client.state}): ${ev.data}`,
+  );
+
+  let packet;
+  try {
+    packet = parsePacket(ev.data);
+  } catch (e) {
+    const errorPacket = createErrorPacket(
+      ErrorCategory.INVALID,
+      "BAD_OP",
+      "Malformed JSON or invalid packet structure",
+    );
+    socket.send(serializePacket(errorPacket));
     return;
   }
+
   try {
-    console.debug(`${client.clientid} (${client.state}): ${ev.data}`);
-    try {
-      const packet = parsePacket(ev.data);
-      mainPacketHandler(packet, clients, socket, client, channels);
-    } catch (_) {
-      const errorPacket = createErrorPacket(ErrorCategory.INVALID, "BAD_OP");
-      socket.send(serializePacket(errorPacket));
-    }
-  } catch (error) {
-    console.error(error);
+    mainPacketHandler(packet, clients, socket, client, channels);
+  } catch (e) {
+    console.error(e);
+    const errorPacket = createErrorPacket(
+      ErrorCategory.SERVER,
+      "INTERNAL",
+      "Internal server error",
+    );
+    socket.send(serializePacket(errorPacket));
   }
 }
 
