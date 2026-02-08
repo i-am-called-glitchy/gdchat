@@ -9,6 +9,7 @@ import {
   serializePacket,
 } from "../protocol.ts";
 import { ensurePacketHasNonce, errorBadState } from "./utils.ts";
+import { conditionalLog } from "../utils.ts";
 
 const testTokens: Map<string, Profile> = new Map();
 // ! Take this out in prod
@@ -40,7 +41,8 @@ function handleAuthStep2(
     socket.close(CloseCode.BAD_AUTH, "Bad token");
     return;
   }
-  console.log(
+  conditionalLog(
+    "AUTH_STEP2",
     "handleAuthStep2 triggered.. ight i will just pretend everything checks out :P",
   );
   client.state = CHATSTATE.AUTHENTICATED;
