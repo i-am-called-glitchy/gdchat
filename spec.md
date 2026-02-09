@@ -99,8 +99,7 @@ extensions. Version should never decrement.
 #### Display name restrictions:
 
 - 1-40 characters
-- Explicitly most visible Unicode characters allowed. The space character is an
-  exception.
+- Explicitly most visible Unicode characters allowed, including the space character.
 - No leading/trailing whitespace.
 - Server is allowed to use custom logic to block lookalikes like U+0430 and
   U+0061.
@@ -111,7 +110,7 @@ Note: See [this](#invalid-category)
 
 - 3-32 characters
 - Only characters allowed: `abcdefghijklmnopqrstuvwxyz_.1234567890`
-- Must be unique globally
+- Must be unique per namespace.
 - Must not start nor end with a dot
 - Two+ dots cannot be in a row.
 
